@@ -3,6 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 const WHATSAPP_URL = "https://wa.me/919442071163";
 const categories = ["Aari work", "Bridal", "Customised", "Not sure yet"];
 
+function LogoMark({ className = "" }) {
+  return (
+    <svg className={className} viewBox="0 0 521 1018" aria-hidden="true">
+      <use href={`${import.meta.env.BASE_URL}brand-symbols.svg#mk`} />
+    </svg>
+  );
+}
+
 function BrandMark({ className = "" }) {
   return (
     <svg className={className} viewBox="0 0 563 312" aria-hidden="true">
@@ -50,6 +58,7 @@ function App() {
     }
   });
   const [category, setCategory] = useState(categories[0]);
+  const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
 
   useEffect(() => {
@@ -127,28 +136,41 @@ function App() {
 
       <header className="top" ref={headerRef}>
         <div className="wrap">
-          <nav aria-label="Main">
-            <a href="#collections">Collections</a>
-            <a href="#process">How it works</a>
-            <a href="#story">Our story</a>
-            <a href="#faq">FAQ</a>
+          <nav className={menuOpen ? "main-nav open" : "main-nav"} id="main-navigation" aria-label="Main">
+            <a href="#collections" onClick={() => setMenuOpen(false)}>Collections</a>
+            <a href="#process" onClick={() => setMenuOpen(false)}>How it works</a>
+            <a href="#story" onClick={() => setMenuOpen(false)}>Our story</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
           </nav>
           <a className="brand" href="#top" aria-label="Bhuvi’s Designers, back to top">
-            <BrandMark />
+            <LogoMark />
           </a>
           <div className="tools">
             <button
-              className="tg"
+              className="menu-toggle"
               type="button"
-              aria-label={themeLabel}
-              onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="main-navigation"
+              onClick={() => setMenuOpen((isOpen) => !isOpen)}
             >
-              <ThemeIcon isDark={theme === "dark"} />
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                {menuOpen ? <path d="m6 6 12 12M18 6 6 18" /> : <path d="M3 7h18M3 12h18M3 17h18" />}
+              </svg>
             </button>
             <a className="btn" href="#contact">Book now</a>
           </div>
         </div>
       </header>
+
+      <button
+        className="tg theme-toggle"
+        type="button"
+        aria-label={themeLabel}
+        onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+      >
+        <ThemeIcon isDark={theme === "dark"} />
+      </button>
 
       <main id="top">
         <section className="hero" style={{ padding: 0 }}>
