@@ -1,8 +1,9 @@
 :root{
   --bg:#faf8f3;--fg:#1c1b19;--mute:#6b675e;--line:#d8d3c7;--p1:#e6e1d6;--p2:#cdc7ba;--btn:#000;--btnfg:#faf8f3;--zb:#ece7dc;--zf:#1c1b19;--zm:#6b675e;--zl:#cfc9bb;--hb:linear-gradient(165deg,#ebe6db,#c8c2b4);--hf:#1c1b19;--hm:#5d594f;--ab:#1c1b19;--af:#faf8f3;
-  --serif:"Marcellus","Times New Roman",serif;--sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  --serif:"Mangelic","Times New Roman",serif;--sans:"Jost","Helvetica Neue",Arial,sans-serif;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
 }
+@font-face{font-family:"Mangelic";src:url("./assets/mangelic.otf") format("opentype");font-style:normal;font-weight:400;font-display:swap}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#f1ede4;--mute:#a39e93;--line:#34322e;--p1:#262522;--p2:#33312d;--btn:#f1ede4;--btnfg:#000;--zb:#000;--zf:#f6f2e9;--zm:#a9a396;--zl:#3a3833;--hb:linear-gradient(165deg,#34322e,#0d0d0c);--hf:#f6f2e9;--hm:#bdb7aa;--ab:#f1ede4;--af:#000;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#151514;--fg:#f1ede4;--mute:#a39e93;--line:#34322e;--p1:#262522;--p2:#33312d;--btn:#f1ede4;--btnfg:#000;--zb:#000;--zf:#f6f2e9;--zm:#a9a396;--zl:#3a3833;--hb:linear-gradient(165deg,#34322e,#0d0d0c);--hf:#f6f2e9;--hm:#bdb7aa;--ab:#f1ede4;--af:#000;color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
