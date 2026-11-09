@@ -80,7 +80,12 @@ function App() {
             <div className="hero-copy">
               <span className="eb">Custom designer wear for women</span>
               <h1 aria-label="Made for you, stitch by stitch.">
-                {"Made for you, stitch by stitch.".split(" ").map((word, index) => (
+                {"Made for you,".split(" ").map((word, index) => (
+                  <span className="w" aria-hidden="true" key={`${word}-${index}`}>
+                    <i style={{ "--i": index }}>{word}</i>
+                  </span>
+                ))}
+                {"stitch by stitch.".split(" ").map((word, index) => (
                   <span className="w" aria-hidden="true" key={`${word}-${index}`}>
                     <i style={{ "--i": index }}>{word}</i>
                   </span>
