@@ -4,11 +4,7 @@ const WHATSAPP_URL = "https://wa.me/919442071163";
 const categories = ["Aari work", "Bridal", "Customised", "Not sure yet"];
 
 function LogoMark({ className = "" }) {
-  return (
-    <svg className={className} viewBox="0 0 521 1018" aria-hidden="true">
-      <use href={`${import.meta.env.BASE_URL}brand-symbols.svg#mk`} />
-    </svg>
-  );
+  return <img className={className} src={`${import.meta.env.BASE_URL}logo-mark.svg`} alt="" />;
 }
 
 function BrandMark({ className = "" }) {
