@@ -6,7 +6,7 @@ const categories = ["Aari work", "Bridal", "Customised", "Not sure yet"];
 function BrandMark({ className = "" }) {
   return (
     <svg className={className} viewBox="0 0 563 312" aria-hidden="true">
-      <use href="/brand-symbols.svg#wm" />
+      <use href={`${import.meta.env.BASE_URL}brand-symbols.svg#wm`} />
     </svg>
   );
 }
@@ -14,7 +14,7 @@ function BrandMark({ className = "" }) {
 function Motif() {
   return (
     <svg className="mono" viewBox="0 0 521 1018" aria-hidden="true">
-      <use href="/brand-symbols.svg#mk" />
+      <use href={`${import.meta.env.BASE_URL}brand-symbols.svg#mk`} />
     </svg>
   );
 }
