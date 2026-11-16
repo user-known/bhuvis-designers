@@ -6,7 +6,7 @@
 .story-art svg{height:72%;width:auto;opacity:.34}
 .story-copy{max-width:760px}
 .story-copy h2{margin-bottom:1rem}
-.story-copy .lead{max-width:62ch}
+.story-copy .lead{max-width:54ch}
 .story-copy .link{display:inline-block;margin-top:1.25rem}
 .story-cta{background:var(--zb);color:var(--zf);text-align:center}
 .story-cta .eb,.story-cta .lead{color:var(--zm)}

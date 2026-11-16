@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const HOME_URL = import.meta.env.BASE_URL;
 const STORY_URL = `${HOME_URL}our-story.html`;
+const WHATSAPP_URL = "https://wa.me/919442071163";
 
 function ThemeIcon({ isDark }) {
   return isDark ? (
@@ -20,28 +21,62 @@ function LogoMark() {
   return <img src={`${HOME_URL}logo-mark.svg`} alt="" />;
 }
 
+const THEME_KEY = "theme";
+const darkQuery = () => window.matchMedia("(prefers-color-scheme: dark)");
+
+// The saved choice wins; otherwise follow the device setting.
+function resolveTheme() {
+  const chosen = document.documentElement.getAttribute("data-theme");
+  if (chosen === "dark" || chosen === "light") return chosen;
+  return darkQuery().matches ? "dark" : "light";
+}
+
 export default function SiteHeader() {
-  const [theme, setTheme] = useState(() => {
-    try {
-      return localStorage.getItem("theme") === "dark" ? "dark" : "light";
-    } catch {
-      return "light";
-    }
-  });
+  // Starts as "light" so the prerendered HTML and first client render match;
+  // the effect below corrects it before the visitor can reach the button.
+  const [theme, setTheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
+  const navRef = useRef(null);
+  const menuButtonRef = useRef(null);
   const themeLabel =
     theme === "dark" ? "Switch to the light version" : "Switch to the dark version";
 
   useEffect(() => {
     document.documentElement.classList.add("js");
-    document.documentElement.setAttribute("data-theme", theme);
+    setTheme(resolveTheme());
+
+    const query = darkQuery();
+    const followDevice = () => {
+      if (!document.documentElement.hasAttribute("data-theme")) setTheme(resolveTheme());
+    };
+    query.addEventListener("change", followDevice);
+    return () => query.removeEventListener("change", followDevice);
+  }, []);
+
+  const toggleTheme = () => {
+    const next = resolveTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
     try {
-      localStorage.setItem("theme", theme);
+      localStorage.setItem(THEME_KEY, next);
     } catch {
       // The selected theme still applies for this page when storage is unavailable.
     }
-  }, [theme]);
+    setTheme(next);
+  };
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    navRef.current?.querySelector("a")?.focus();
+    const closeOnEscape = (event) => {
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -57,13 +92,16 @@ export default function SiteHeader() {
     <>
       <div className="ann">
         Custom designer clothing for women, made in Coimbatore.{" "}
-        <a href={`${HOME_URL}#contact`}>Book your consultation on WhatsApp.</a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+          Book your consultation on WhatsApp.
+        </a>
       </div>
       <header className="top" ref={headerRef}>
         <div className="wrap">
           <nav
             className={menuOpen ? "main-nav open" : "main-nav"}
             id="main-navigation"
+            ref={navRef}
             aria-label="Main"
           >
             <a href={`${HOME_URL}#collections`} onClick={() => setMenuOpen(false)}>
@@ -86,6 +124,7 @@ export default function SiteHeader() {
             <button
               className="menu-toggle"
               type="button"
+              ref={menuButtonRef}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="main-navigation"
@@ -115,7 +154,7 @@ export default function SiteHeader() {
         className="tg theme-toggle"
         type="button"
         aria-label={themeLabel}
-        onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+        onClick={toggleTheme}
       >
         <ThemeIcon isDark={theme === "dark"} />
       </button>

@@ -21,7 +21,7 @@ export default function SiteFooter() {
             <p>Custom designer clothing for women.</p>
           </div>
           <div>
-            <h4>01 — Explore</h4>
+            <h2>01 — Explore</h2>
             <ul>
               <li><a href={`${BASE_URL}#collections`}>Collections</a></li>
               <li><a href={`${BASE_URL}#process`}>How it works</a></li>
@@ -29,7 +29,7 @@ export default function SiteFooter() {
             </ul>
           </div>
           <div>
-            <h4>02 — Book</h4>
+            <h2>02 — Book</h2>
             <ul>
               <li><a href={`${BASE_URL}#contact`}>Consultation form</a></li>
               <li><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
@@ -37,7 +37,7 @@ export default function SiteFooter() {
             </ul>
           </div>
           <div>
-            <h4>03 — Visit</h4>
+            <h2>03 — Visit</h2>
             <ul><li>Coimbatore</li><li>Tamil Nadu, India</li></ul>
           </div>
         </div>

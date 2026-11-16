@@ -5,6 +5,7 @@ import { BASE_URL } from "./siteLinks.js";
 
 const WHATSAPP_URL = "https://wa.me/919442071163";
 const categories = ["Aari work", "Bridal", "Customised", "Not sure yet"];
+const HEADLINE = ["Made for you,", "stitch by stitch."];
 
 function Motif() {
   return (
@@ -79,17 +80,17 @@ function App() {
           <div className="wrap">
             <div className="hero-copy">
               <span className="eb">Custom designer wear for women</span>
-              <h1 aria-label="Made for you, stitch by stitch.">
-                {"Made for you,".split(" ").map((word, index) => (
-                  <span className="w" aria-hidden="true" key={`${word}-${index}`}>
-                    <i style={{ "--i": index }}>{word}</i>
-                  </span>
-                ))}
-                {"stitch by stitch.".split(" ").map((word, index) => (
-                  <span className="w" aria-hidden="true" key={`${word}-${index}`}>
-                    <i style={{ "--i": index }}>{word}</i>
-                  </span>
-                ))}
+              <h1 aria-label={HEADLINE.join(" ")}>
+                {HEADLINE.map((line, lineIndex) =>
+                  line.split(" ").map((word, index) => (
+                    <React.Fragment key={`${lineIndex}-${index}`}>
+                      {(lineIndex > 0 || index > 0) && " "}
+                      <span className="w" aria-hidden="true">
+                        <i style={{ "--i": index }}>{word}</i>
+                      </span>
+                    </React.Fragment>
+                  )),
+                )}
               </h1>
               <p>
                 Aari work, bridal wear and fully customised outfits, designed with you in
