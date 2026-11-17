@@ -26,6 +26,7 @@ export default function SiteFooter() {
               <li><a href={`${BASE_URL}#collections`}>Collections</a></li>
               <li><a href={`${BASE_URL}#process`}>How it works</a></li>
               <li><a href={STORY_URL}>Our story</a></li>
+              <li><a href={`${BASE_URL}gallery.html`}>Gallery</a></li>
             </ul>
           </div>
           <div>

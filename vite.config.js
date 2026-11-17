@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, "index.html"),
         story: resolve(import.meta.dirname, "our-story.html"),
+        gallery: resolve(import.meta.dirname, "gallery.html"),
       },
     },
   },

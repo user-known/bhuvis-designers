@@ -3,6 +3,7 @@ import { BookLink } from "./booking.jsx";
 
 const HOME_URL = import.meta.env.BASE_URL;
 const STORY_URL = `${HOME_URL}our-story.html`;
+const GALLERY_URL = `${HOME_URL}gallery.html`;
 const WHATSAPP_URL = "https://wa.me/919442071163";
 
 function ThemeIcon({ isDark }) {
@@ -114,8 +115,8 @@ export default function SiteHeader() {
             <a href={STORY_URL} onClick={() => setMenuOpen(false)}>
               Our story
             </a>
-            <a href={`${HOME_URL}#faq`} onClick={() => setMenuOpen(false)}>
-              FAQ
+            <a href={GALLERY_URL} onClick={() => setMenuOpen(false)}>
+              Gallery
             </a>
           </nav>
           <a className="brand" href={`${HOME_URL}#top`} aria-label="Bhuvi’s Designers, home">

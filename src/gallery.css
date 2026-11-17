@@ -1,0 +1,69 @@
+/* Gallery page */
+.gallery-head{background:var(--hb);color:var(--hf);padding:clamp(3.5rem,8vw,6rem) 0 clamp(2rem,4vw,3rem)}
+.gallery-head h1{font-size:clamp(2.8rem,6vw,5rem);margin-bottom:1rem}
+.gallery-head .eb{color:var(--hm)}
+.gallery-head .lead{color:var(--hm);margin:0}
+
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:clamp(2rem,4vw,3rem)}
+.filter{min-height:44px;padding:.55rem 1.1rem;font:400 .95rem var(--sans);color:var(--hf);background:transparent;border:1px solid color-mix(in srgb,var(--hf) 35%,transparent);cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.filter:hover{border-color:var(--hf)}
+.filter[aria-pressed="true"]{background:var(--hf);color:var(--hv);border-color:var(--hf)}
+.filter-count{font-size:.8rem;opacity:.75;margin-left:.2rem;font-variant-numeric:tabular-nums}
+
+section.gallery-wall{padding:clamp(2.5rem,5vw,4rem) 0 clamp(4rem,8vw,6rem)}
+.wall{list-style:none;margin:0;padding:0;columns:2;column-gap:clamp(.75rem,1.6vw,1.25rem);position:relative}
+.wall li{break-inside:avoid;margin-bottom:clamp(.75rem,1.6vw,1.25rem)}
+.wall-item{position:relative;display:block;width:100%;padding:0;border:0;background:linear-gradient(160deg,var(--p1),var(--p2));cursor:zoom-in;overflow:hidden;color:#fff;text-align:left}
+.wall-item img{display:block;width:100%;height:auto;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.wall-item:hover img{transform:scale(1.04)}
+.wall-item:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.wall-caption{position:absolute;inset:auto 0 0;display:grid;gap:.1rem;padding:2.5rem 1rem .9rem;background:linear-gradient(180deg,transparent,rgb(12 11 10 / .72) 55%)}
+.wall-caption b{font:400 1.15rem/1.2 var(--serif)}
+.wall-caption small{font-size:.85rem;color:rgb(255 255 255 / .85)}
+@media (hover:hover){
+  .wall-caption{opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1)}
+  .wall-item:hover .wall-caption,.wall-item:focus-visible .wall-caption{opacity:1;transform:none}
+}
+.wall.is-limited::after{content:"";position:absolute;inset:auto 0 0;height:min(240px,30%);background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 0%,transparent),var(--bg));pointer-events:none}
+.wall-more{display:flex;justify-content:center;margin-top:1.5rem}
+@media (min-width:700px){.wall{columns:3}}
+@media (min-width:1080px){.wall{columns:4}}
+@media (max-width:560px){.wall-caption{padding:2rem .7rem .6rem}.wall-caption b{font-size:1rem}.wall-caption small{font-size:.8rem}}
+
+.gallery-cta{background:var(--zb);color:var(--zf);text-align:center}
+.gallery-cta .eb,.gallery-cta .lead{color:var(--zm)}
+.gallery-cta h2{margin-inline:auto}
+.gallery-cta .lead{margin:1rem auto 2rem}
+.gallery-cta .acts{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+
+/* Lightbox */
+.lightbox{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:clamp(1rem,4vw,3rem) clamp(1rem,8vw,6rem);border:0;background:transparent;color:#f6f2e9;overflow:hidden}
+.lightbox::backdrop{background:rgb(12 11 10 / .9)}
+.lightbox[open]{display:grid;place-items:center;animation:fade .3s ease-out}
+.lightbox-figure{margin:0;display:grid;gap:.9rem;justify-items:center;max-width:100%}
+.lightbox-figure img{display:block;max-width:100%;max-height:calc(100dvh - 9rem);width:auto;height:auto;object-fit:contain}
+.lightbox-figure figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:2rem;width:100%}
+.lightbox-figure figcaption span:first-child{display:grid}
+.lightbox-figure b{font:400 1.3rem/1.2 var(--serif)}
+.lightbox-figure small{font-size:.9rem;color:#bdb7aa}
+.lightbox-count{font-size:.9rem;color:#bdb7aa;font-variant-numeric:tabular-nums}
+.lightbox .tg{position:fixed;color:#f6f2e9;border-color:rgb(246 242 233 / .35);background:rgb(12 11 10 / .4)}
+.lightbox .tg:hover{background:#f6f2e9;color:#151514}
+.lightbox-close{top:1rem;right:1rem}
+.lightbox-nav{top:50%;transform:translateY(-50%)}
+.lightbox-nav.prev{left:1rem}
+.lightbox-nav.next{right:1rem}
+html:has(.lightbox[open]){overflow:hidden}
+
+@media (max-width:860px){
+  .lightbox{padding:4.5rem 1rem 5.5rem}
+  .lightbox-nav{top:auto;bottom:1rem;transform:none}
+  .lightbox-nav.prev{left:calc(50% - 3.25rem)}
+  .lightbox-nav.next{right:calc(50% - 3.25rem)}
+  .lightbox-figure img{max-height:calc(100dvh - 14rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  .wall-item img,.wall-caption{transition:none}
+  .wall-item:hover img{transform:none}
+  .lightbox[open]{animation:none}
+}
