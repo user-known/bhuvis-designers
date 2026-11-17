@@ -1,74 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SiteFooter from "./SiteFooter.jsx";
 import SiteHeader from "./SiteHeader.jsx";
+import Photo from "./Photo.jsx";
+import Stats from "./Stats.jsx";
+import useReveal from "./useReveal.js";
 import { BASE_URL } from "./siteLinks.js";
+import { BookLink, BookingDialog, ConsultationForm, WHATSAPP_URL } from "./booking.jsx";
+import aariWork from "./assets/images/aari-work.webp";
+import bridal from "./assets/images/bridal.webp";
+import craftTools from "./assets/images/craft-tools.webp";
+import customised from "./assets/images/customised.webp";
+import stitching from "./assets/images/stitching.webp";
 
-const WHATSAPP_URL = "https://wa.me/919442071163";
-const categories = ["Aari work", "Bridal", "Customised", "Not sure yet"];
 const HEADLINE = ["Made for you,", "stitch by stitch."];
 
-function Motif() {
-  return (
-    <svg className="mono" viewBox="0 0 521 1018" aria-hidden="true">
-      <use href={`${import.meta.env.BASE_URL}brand-symbols.svg#mk`} />
-    </svg>
-  );
-}
-
-function Placeholder({ className = "" }) {
-  return (
-    <div className={`ph ${className}`.trim()}>
-      <Motif />
-      <span>Photo coming soon</span>
-    </div>
-  );
-}
-
 function App() {
-  const [category, setCategory] = useState(categories[0]);
-
-  useEffect(() => {
-    const revealElements = document.querySelectorAll(".rv");
-    if (!("IntersectionObserver" in window)) {
-      revealElements.forEach((element) => element.classList.add("in"));
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
-    );
-
-    revealElements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
-  const chooseCategory = (value) => {
-    setCategory(value);
-  };
-
-  const submitEnquiry = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const message = [
-      "Hi Bhuvi’s Designers, I’d like to book a consultation.",
-      `Name: ${formData.get("name")}`,
-      `Looking for: ${formData.get("cat")}`,
-      formData.get("budget") && `Budget: ${formData.get("budget")}`,
-      formData.get("idea") && `My idea: ${formData.get("idea")}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-  };
+  useReveal();
 
   return (
     <>
@@ -76,7 +23,6 @@ function App() {
 
       <main id="top">
         <section className="hero" style={{ padding: 0 }}>
-          <span className="ph-l">Photo coming soon</span>
           <div className="wrap">
             <div className="hero-copy">
               <span className="eb">Custom designer wear for women</span>
@@ -97,17 +43,19 @@ function App() {
                 Coimbatore and stitched to your measurements.
               </p>
               <div className="acts">
-                <a className="btn" href="#contact">Book a consultation</a>
+                <BookLink className="btn">Book a consultation</BookLink>
                 <a className="btn ghost" href="#collections">Explore the collections</a>
               </div>
             </div>
-            <a className="card" href="#contact" onClick={() => chooseCategory("Aari work")}>
+            <BookLink className="card" category="Aari work">
               <small>Aari work</small>
               <b>From ₹2,000</b>
               <small>Hand-embroidered detailing</small>
-            </a>
+            </BookLink>
           </div>
         </section>
+
+        <Stats />
 
         <section id="collections">
           <div className="wrap">
@@ -116,27 +64,27 @@ function App() {
                 <span className="eb">Our collections</span>
                 <h2>Three ways to wear something made for you.</h2>
               </div>
-              <a className="link" href="#contact">Book a consultation</a>
+              <BookLink className="link">Book a consultation</BookLink>
             </div>
             <div className="tiles">
-              <a className="tile rv" style={{ "--d": "0s" }} href="#contact" onClick={() => chooseCategory("Aari work")}>
-                <Placeholder />
+              <BookLink className="tile rv" style={{ "--d": "0s" }} category="Aari work">
+                <Photo src={aariWork} alt="Hands holding an embroidery hoop with pink floral needlework" />
                 <h3>Aari work</h3>
                 <p>Intricate hand-embroidered detailing, stitched into your design.</p>
                 <div className="pr"><span>From ₹2,000</span></div>
-              </a>
-              <a className="tile rv" style={{ "--d": "0.12s" }} href="#contact" onClick={() => chooseCategory("Bridal")}>
-                <Placeholder />
+              </BookLink>
+              <BookLink className="tile rv" style={{ "--d": "0.12s" }} category="Bridal">
+                <Photo src={bridal} alt="A bride in a red and gold embroidered lehenga" />
                 <h3>Bridal</h3>
                 <p>Bridal outfits designed around you and your day.</p>
                 <div className="pr"><span>From ₹5,000</span></div>
-              </a>
-              <a className="tile rv" style={{ "--d": "0.24s" }} href="#contact" onClick={() => chooseCategory("Customised")}>
-                <Placeholder />
+              </BookLink>
+              <BookLink className="tile rv" style={{ "--d": "0.24s" }} category="Customised">
+                <Photo src={customised} alt="A yellow kurta with an embroidered neckline on a mannequin" />
                 <h3>Customised</h3>
                 <p>Bring your idea and your budget. We design to fit both.</p>
                 <div className="pr"><span>Based on your budget</span></div>
-              </a>
+              </BookLink>
             </div>
             <p className="note">
               Prices are starting points. Your final quote is confirmed after your consultation.
@@ -146,7 +94,7 @@ function App() {
 
         <section className="alt" id="process">
           <div className="wrap split">
-            <Placeholder className="rv" />
+            <Photo className="rv" src={stitching} alt="Hands guiding fabric through a sewing machine" />
             <div className="rv">
               <span className="eb">How it works</span>
               <h2>From first chat to finished outfit.</h2>
@@ -164,7 +112,7 @@ function App() {
                   <div><h3>Final output</h3><p>Your finished piece, ready to wear.</p></div>
                 </li>
               </ol>
-              <a className="btn" href="#contact">Book a consultation</a>
+              <BookLink className="btn">Book a consultation</BookLink>
             </div>
           </div>
         </section>
@@ -189,7 +137,7 @@ function App() {
                 Read our story
               </a>
             </div>
-            <Placeholder className="rv" />
+            <Photo className="rv" src={craftTools} alt="Thread spools, scissors and a measuring tape on a work table" />
           </div>
         </section>
 
@@ -230,35 +178,13 @@ function App() {
               </ul>
               <p className="hint">The form opens WhatsApp with your details filled in, ready to send.</p>
             </div>
-            <form className="rv" style={{ "--d": "0.15s" }} onSubmit={submitEnquiry}>
-              <label>
-                Your name
-                <input name="name" autoComplete="name" required />
-              </label>
-              <label>
-                What are you looking for?
-                <select name="cat" value={category} onChange={(event) => setCategory(event.target.value)}>
-                  {categories.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
-              <label>
-                Budget (optional)
-                <input name="budget" placeholder="For example, ₹8,000" />
-              </label>
-              <label>
-                Tell us about your idea
-                <textarea name="idea" placeholder="Occasion, colours, inspiration" />
-              </label>
-              <div className="row">
-                <button className="btn" type="submit">Send on WhatsApp</button>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Or start a chat directly</a>
-              </div>
-            </form>
+            <ConsultationForm className="rv" style={{ "--d": "0.15s" }} />
           </div>
         </section>
       </main>
 
       <SiteFooter />
+      <BookingDialog />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BookLink } from "./booking.jsx";
 
 const HOME_URL = import.meta.env.BASE_URL;
 const STORY_URL = `${HOME_URL}our-story.html`;
@@ -146,7 +147,7 @@ export default function SiteHeader() {
                 )}
               </svg>
             </button>
-            <a className="btn" href={`${HOME_URL}#contact`}>Book now</a>
+            <BookLink className="btn">Book now</BookLink>
           </div>
         </div>
       </header>
